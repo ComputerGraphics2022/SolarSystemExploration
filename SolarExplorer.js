@@ -4,7 +4,7 @@ window.onload = function init()
 	const canvas = document.getElementById( "gl-canvas" );
 	const renderer = new THREE.WebGLRenderer({canvas});
 	
-	var radius   = 0.5,
+	var radius   = 0.6,
 		segments = 32,
 		rotation = 6;  
 
