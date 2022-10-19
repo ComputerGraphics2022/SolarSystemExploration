@@ -2,8 +2,9 @@ var sceneID = null;
 
 window.onload = function init() 
 {
-	var rotSpeed = 0.0001;
-	var revSpeed = 0;
+	var rotSpeed = 1;
+	var revSpeed = 1;
+	var theta  = 0;
 	const canvas = document.getElementById( "gl-canvas" );
 	const renderer = new THREE.WebGLRenderer({canvas});
 
@@ -25,32 +26,27 @@ window.onload = function init()
 	sun.rotation.y = 10;
 	scene.add(sun);
 
-	var sunAtmosphere = createSunAtmos(10.2, 64);
+	var sunAtmosphere = createSunAtmos(11, 64);
 	scene.add(sunAtmosphere);
 	
 	var mercury = createMercury(1, 32);
 	mercury.position.set(20, 0, 0);
-	mercury.rotation.y = 5;
 	scene.add(mercury);
 
 	var venus = createVenus(2.5, 32);
 	venus.position.set(37.4, 0, 0);
-	mercury.rotation.y = 5;
 	scene.add(venus);
 
     var earth = createEarth(2.6, 32);
 	earth.position.set(51, 0, 0);
-	earth.rotation.y = 5; 
 	scene.add(earth);
 
     var cloud_earth = createCloud_earth(2.61, 32);
 	cloud_earth.position.set(51, 0, 0);
-	cloud_earth.rotation.y = 5;
 	scene.add(cloud_earth);
 
 	var mars = createMars(1.9, 32);
 	mars.position.set(78, 0, 0);
-	mars.rotation.y = 5;
 	scene.add(mars);
 
 
@@ -68,6 +64,14 @@ window.onload = function init()
 		}
 		render();
 	}
+	document.getElementById("revSpeed").oninput = function(event){
+		revSpeed = parseFloat(event.target.value);
+
+		if(sceneID !== null){	
+			cancelAnimationFrame(sceneID);
+		}
+		render();
+	}
 
 
 
@@ -77,12 +81,45 @@ window.onload = function init()
 	// render canvas
 	function render() {
 		controls.update();
-		sun.rotation.y += rotSpeed;
-		earth.rotation.y += rotSpeed;
-		cloud_earth.rotation.y += rotSpeed;
-		mercury.rotation.y += rotSpeed;
-		venus.rotation.y += rotSpeed;
-		mars.rotation.y += rotSpeed;
+		// rotate sun/plantes
+		// sun			1109	->	10
+		// mercury    	1.6		->	1.6
+		// venus    	1		->	1
+		// earth    	258		->	2.5
+		// mars    		134		->	3
+		// jupiter    	7000	->	20
+		// saturn      	5438	->	18
+		// uranus   	1438	->	12
+		// neptune   	1488	->	12
+		sun.rotation.y += 0.0005 * 10 * rotSpeed;
+		mercury.rotation.y -= 0.0005 * rotSpeed * 1.6;
+		venus.rotation.y -= 0.0005 * rotSpeed;
+		earth.rotation.y += 0.0005 * rotSpeed * 2.5;
+		cloud_earth.rotation.y += 0.0005 * rotSpeed * 2.5;
+		mars.rotation.y += 0.0005 * rotSpeed * 3;
+
+		// revolve planets
+		// mercury    	8.6
+		// venus    	6.4
+		// earth    	5.4
+		// mars    		4.4
+		// jupiter    	2.4
+		// saturn      	1.7
+		// uranus   	1.3
+		// neptune   	1
+		theta += 0.001;
+		mercury.position.z = 20 * Math.sin(theta * 8.6 * revSpeed);
+    	mercury.position.x = 20 * Math.cos(theta * 8.6 * revSpeed);
+		venus.position.z = 37.4 * Math.sin(theta * 6.4 * revSpeed);
+    	venus.position.x = 37.4 * Math.cos(theta * 6.4 * revSpeed);
+		earth.position.z = 51 * Math.sin(theta * 5.4 * revSpeed);
+    	earth.position.x = 51 * Math.cos(theta * 5.4 * revSpeed);
+		cloud_earth.position.z = 51 * Math.sin(theta * 5.4 * revSpeed);
+    	cloud_earth.position.x = 51 * Math.cos(theta * 5.4 * revSpeed);
+		mars.position.z = 78 * Math.sin(theta * 4.4 * revSpeed);
+    	mars.position.x = 78 * Math.cos(theta * 4.4 * revSpeed);
+
+
 
 		//console.log(sun.rotation.y);
 		sceneID = requestAnimationFrame(render);
