@@ -13,15 +13,15 @@ window.onload = function init()
 	var camera = new THREE.PerspectiveCamera(45, canvas.width / canvas.height, 0.01, 1000);
 	camera.position.z = 200;
 
+	// add lightsources
 	scene.add(new THREE.AmbientLight(0xffffff, 0.8));
 
-	// add lightsources
 	var sunLight = new THREE.PointLight(0xffffff, 1);
 	sunLight.position.set(0, 0, 0);
 	scene.add(sunLight);
 
 
-	// add sun and planets
+	// add sun/planets
 	var sun = createSun(10, 32);
 	sun.rotation.y = 10;
 	scene.add(sun);
@@ -49,7 +49,7 @@ window.onload = function init()
 	mars.position.set(78, 0, 0);
 	scene.add(mars);
 
-
+	// add canvas background
 	var stars = createStars(150, 64);
 	scene.add(stars);
 
@@ -86,7 +86,7 @@ window.onload = function init()
 		// mercury    	1.6		->	1.6
 		// venus    	1		->	1
 		// earth    	258		->	2.5
-		// mars    		134		->	3
+		// mars    		134		->	2
 		// jupiter    	7000	->	20
 		// saturn      	5438	->	18
 		// uranus   	1438	->	12
@@ -96,7 +96,7 @@ window.onload = function init()
 		venus.rotation.y -= 0.0005 * rotSpeed;
 		earth.rotation.y += 0.0005 * rotSpeed * 2.5;
 		cloud_earth.rotation.y += 0.0005 * rotSpeed * 2.5;
-		mars.rotation.y += 0.0005 * rotSpeed * 3;
+		mars.rotation.y += 0.0005 * rotSpeed * 2;
 
 		// revolve planets
 		// mercury    	8.6
