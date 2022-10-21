@@ -1,4 +1,235 @@
+class SpaceshipController { //controls spaceship 
+    constructor() {
+      this._Init();
+    }
+  
+    _Init() {
+      this._decceleration = new THREE.Vector3(-0.0005, -5.0, -0.0001);
+      this._acceleration = new THREE.Vector3(1, 50.0, 0.25);
+      this._velocity = new THREE.Vector3(0, 0, 0);
+	  this._position = new THREE.Vector3();	
+      this._input = new keyboardListener();
+  
+      this._LoadModels();
+    }
+  
+    _LoadModels() { //load spaceship gltf
+      const loader = new THREE.GLTFLoader();
+      loader.load('./gltf/spaceship/scene.gltf', (gltf) => {
+        gltf = gltf.scene.children[0];
+        gltf.scale.set(0.5,0.5,0.5);
+		gltf.position.set(0,0,-30);
+		this.spaceship=gltf;
+		scene.add(gltf);
+      }, undefined, function (error) {
+        console.error(error);      
+      });
+    }
+    get Position() { 
+	  return this._position;
+	}
+	
+	get Rotation() { 
+		if (!this.spaceship) {
+			return new THREE.Quaternion();
+		}
+	  	return this.spaceship.quaternion;
+	}
+
+    Update(timeInSeconds) { // Update spaceship position
+      if (!this.spaceship) {
+        return;
+      }
+  
+      var velocity = this._velocity;
+      var frameDecceleration = new THREE.Vector3(
+          velocity.x * this._decceleration.x,
+          velocity.y * this._decceleration.y,
+          velocity.z * this._decceleration.z
+      );
+      frameDecceleration.multiplyScalar(timeInSeconds);
+	  frameDecceleration.y = Math.sign(frameDecceleration.y) * Math.min(
+		  Math.abs(frameDecceleration.y), Math.abs(velocity.y));
+  
+      velocity.add(frameDecceleration);
+  
+      var controlObject = this.spaceship;
+      var _Q = new THREE.Quaternion(); 		//Quarternion(angle,vertex)
+      var _A = new THREE.Vector3();		//axis
+      var _R = controlObject.quaternion.clone(); //result
+  
+      var acc = this._acceleration.clone();
+      if (this._input._keys.shift) {
+        acc.multiplyScalar(2.0);
+      }
+	  
+      if (this._input._keys.forward) {
+        velocity.y -= acc.y * timeInSeconds;
+      }
+      if (this._input._keys.backward) {
+        velocity.y += acc.y * timeInSeconds;
+      }
+      if (this._input._keys.left) {
+        _A.set(0, 0, 1);
+        _Q.setFromAxisAngle(_A, 4.0 * Math.PI * timeInSeconds * this._acceleration.z);
+        _R.multiply(_Q);
+      }
+      if (this._input._keys.right) {
+        _A.set(0, 0, 1);
+        _Q.setFromAxisAngle(_A, 4.0 * -Math.PI * timeInSeconds * this._acceleration.z);
+        _R.multiply(_Q);
+      }
+  
+      controlObject.quaternion.copy(_R);
+  
+      var oldPosition = new THREE.Vector3();
+      oldPosition.copy(controlObject.position);
+  
+      var forward = new THREE.Vector3(0, 1, 0);
+      forward.applyQuaternion(controlObject.quaternion);
+      forward.normalize();
+  
+      var sideways = new THREE.Vector3(1, 0, 0);
+      sideways.applyQuaternion(controlObject.quaternion);
+      sideways.normalize();
+  
+      sideways.multiplyScalar(velocity.x * timeInSeconds);
+      forward.multiplyScalar(velocity.y * timeInSeconds);
+  
+      controlObject.position.add(forward);
+      controlObject.position.add(sideways);
+  
+      oldPosition.copy(controlObject.position);
+	  this._position.copy(controlObject.position);
+  
+	  console.log(this.Position)
+    }
+};
+
+class keyboardListener { // keyboard event listener
+	constructor() {
+		this._Init();    
+	}
+
+	_Init() {
+		this._keys = {
+		forward: false,
+		backward: false,
+		left: false,
+		right: false,
+		space: false,
+		shift: false,
+		};
+		document.addEventListener('keydown', (e) => this._onKeyDown(e), false);
+		document.addEventListener('keyup', (e) => this._onKeyUp(e), false);
+	}
+
+	_onKeyDown(event) {
+		switch (event.keyCode) {
+		case 87: // w
+			this._keys.forward = true;
+			break;
+		case 65: // a
+			this._keys.left = true;
+			break;
+		case 83: // s
+			this._keys.backward = true;
+			break;
+		case 68: // d
+			this._keys.right = true;
+			break;
+		case 32: // SPACE
+			this._keys.space = true;
+			break;
+		case 16: // SHIFT
+			this._keys.shift = true;
+			break;
+		}
+	}
+
+	_onKeyUp(event) {
+		switch(event.keyCode) {
+		case 87: // w
+			this._keys.forward = false;
+			break;
+		case 65: // a
+			this._keys.left = false;
+			break;
+		case 83: // s
+			this._keys.backward = false;
+			break;
+		case 68: // d
+			this._keys.right = false;
+			break;
+		case 32: // SPACE
+			this._keys.space = false;
+			break;
+		case 16: // SHIFT
+			this._keys.shift = false;
+			break;
+		}
+	}
+};
+
+class CameraController { //controls camera
+	constructor(object) {
+	  this._object = object;
+	  this._currentPosition = new THREE.Vector3();
+	  this._currentLookat = new THREE.Vector3();
+	}
+  
+	_CalculateIdealOffset() { // calculate camera position
+	  var idealOffset; 
+
+	  if (firstPerspective==true){ //1인칭
+		idealOffset=new THREE.Vector3(0, -2, 3);//(좌우,앞뒤,위아래)
+	  }
+	  else {//3인칭
+		idealOffset=new THREE.Vector3(0, 18, 15);
+	  }
+	  idealOffset.applyQuaternion(this._object.Rotation);
+	  idealOffset.add(this._object.Position);
+	  return idealOffset;
+	}
+  
+	_CalculateIdealLookat() { // calculate camera lookat
+	  var idealLookat; 
+
+	  if (firstPerspective == true){ //1인칭
+		idealLookat = new THREE.Vector3(0, -10, 2); //(0,0,0)은 물체 방향
+	  }
+	  else { //3인칭
+		idealLookat = new THREE.Vector3(0, -5, 5);
+	  }
+	 
+	  idealLookat.applyQuaternion(this._object.Rotation);
+	  idealLookat.add(this._object.Position);
+	  return idealLookat;
+	}
+  
+	Update(timeElapsed) {
+	  const idealOffset = this._CalculateIdealOffset();
+	  const idealLookat = this._CalculateIdealLookat();
+  
+	  // const t = 0.05;
+	  // const t = 4.0 * timeElapsed;
+	  const t = 1.0 - Math.pow(0.001, timeElapsed);
+  
+	  this._currentPosition.copy(idealOffset);
+	  this._currentLookat.copy(idealLookat);
+	  camera.position.copy(this._currentPosition);
+	  camera.lookAt(this._currentLookat);
+	}
+};
+  
+
+
 var sceneID = null;
+var camera;
+var scene;
+var firstPerspective=true;
+var thirdPerspective=false;
+var trackballControl=false;
 
 window.onload = function init() 
 {
@@ -8,10 +239,10 @@ window.onload = function init()
 	const canvas = document.getElementById( "gl-canvas" );
 	const renderer = new THREE.WebGLRenderer({canvas});
 
-	var scene = new THREE.Scene();
+	scene = new THREE.Scene();
 
-	var camera = new THREE.PerspectiveCamera(45, canvas.width / canvas.height, 0.01, 1000);
-	camera.position.z = 200;
+	camera = new THREE.PerspectiveCamera(45, canvas.width / canvas.height, 0.01, 1000);
+	camera.position.set(0,15,-50);
 
 	// add lightsources
 	scene.add(new THREE.AmbientLight(0xffffff, 0.8));
@@ -79,34 +310,67 @@ window.onload = function init()
 	var stars = createStars(300, 64);
 	scene.add(stars);
 
+	var spaceship=new SpaceshipController();
+	var previousTime = null;
+
+
+	var cameraControl = new CameraController(spaceship);
+
 	var controls = new THREE.TrackballControls(camera, renderer.domElement);
-
-	document.getElementById("rotSpeed").oninput = function(event){
-		rotSpeed = parseFloat(event.target.value);
-		
-		// discard previous render frame to initialize rotation speed(0.0005)
-		if(sceneID !== null){	
-			cancelAnimationFrame(sceneID);
-		}
-		render();
-	}
-	document.getElementById("revSpeed").oninput = function(event){
-		revSpeed = parseFloat(event.target.value);
-
-		if(sceneID !== null){	
-			cancelAnimationFrame(sceneID);
-		}
-		render();
-	}
-
-
 
 	render();
 
 
 	// render canvas
-	function render() {
-		controls.update();
+	function render(time) {
+
+		document.getElementById("rotSpeed").oninput = function(event){
+			rotSpeed = parseFloat(event.target.value);
+		};
+
+		document.getElementById("revSpeed").onchange = function(event){
+			revSpeed = parseFloat(event.target.value);
+		};
+
+		document.getElementById("firstPerspective").onclick = function(){
+			firstPerspective=true;
+			thirdPerspective=false;
+			trackballControl=false;
+		};
+		document.getElementById("thirdPerspective").onclick = function(){
+			thirdPerspective=true;
+			firstPerspective=false;
+			trackballControl=false;
+		};
+		document.getElementById("trackballControl").onclick = function(){
+			trackballControl=true;
+			firstPerspective=false;
+			thirdPerspective=false;
+		};
+
+		if (previousTime === null) {
+			previousTime = time;
+		}
+
+		//spaceship update
+		var timeElapsed = time - previousTime;
+		timeElapsed *= 0.001; //second
+		spaceship.Update(timeElapsed) 
+
+		//camera update
+		if(firstPerspective==true || thirdPerspective==true){
+			cameraControl.Update(timeElapsed);
+		}
+		else{
+			controls.update();
+		}
+		previousTime = time;
+
+		console.log('ship',spaceship.Position);
+		console.log('camera',camera.position)
+
+
+
 		// rotate sun/plantes
 		// sun			1109	->	10
 		// mercury    	1.6		->	1.6
