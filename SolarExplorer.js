@@ -49,8 +49,34 @@ window.onload = function init()
 	mars.position.set(78, 0, 0);
 	scene.add(mars);
 
+	/* create black hole */
+	// change : create to 4 ways
+	const loader = new THREE.GLTFLoader();
+	loader.load('./images/blackhole/scene.gltf', function(gltf){
+	  blackhole = gltf.scene.children[0];
+	  blackhole.scale.set(10, 10, 10);
+	  blackhole.position.set(100, 100, 0);
+	  scene.add(gltf.scene);
+	  animate();
+	  
+	}, undefined, function (error) {
+		console.error(error);
+	});
+	// for rotating black hole 
+	function animate(time) {
+
+		time *= 0.001;  // convert time to seconds
+
+      	const speed = 1 * .3;
+      	const rot = time * speed;
+      	blackhole.rotation.x = rot;
+  
+	   renderer.render(scene,camera);
+	   requestAnimationFrame(animate);
+	}
+
 	// add canvas background
-	var stars = createStars(150, 64);
+	var stars = createStars(300, 64);
 	scene.add(stars);
 
 	var controls = new THREE.TrackballControls(camera, renderer.domElement);
@@ -205,9 +231,6 @@ window.onload = function init()
 			})
 		);
 	}
-
-
-
 
 	// create canvas background
 	function createStars(radius, segments) {
