@@ -4,8 +4,9 @@ class SpaceshipController { //controls spaceship
     }
   
     _Init() {
-      this._decceleration = new THREE.Vector3(-0.0005, -5.0, -0.0001);
-      this._acceleration = new THREE.Vector3(1, 50.0, 0.25);
+      //this._decceleration = new THREE.Vector3(-0.001, -1.0, -0.001);
+	  this._decceleration = new THREE.Vector3(-5, -1.5, -5);
+      this._acceleration = new THREE.Vector3(0.5, 50.0, 40.0);
       this._velocity = new THREE.Vector3(0, 0, 0);
 	  this._position = new THREE.Vector3();	
       this._input = new keyboardListener();
@@ -51,6 +52,11 @@ class SpaceshipController { //controls spaceship
       frameDecceleration.multiplyScalar(timeInSeconds);
 	  frameDecceleration.y = Math.sign(frameDecceleration.y) * Math.min(
 		  Math.abs(frameDecceleration.y), Math.abs(velocity.y));
+	  
+	  frameDecceleration.z = Math.sign(frameDecceleration.z) * Math.min(
+	  	  Math.abs(frameDecceleration.z), Math.abs(velocity.z));
+
+	
   
       velocity.add(frameDecceleration);
   
@@ -70,14 +76,20 @@ class SpaceshipController { //controls spaceship
       if (this._input._keys.backward) {
         velocity.y += acc.y * timeInSeconds;
       }
+	  if (this._input._keys.up) {
+		velocity.z +=acc.z * timeInSeconds;
+	  }
+	  if (this._input._keys.down) {
+		velocity.z -=acc.z * timeInSeconds;
+	  }
       if (this._input._keys.left) {
         _A.set(0, 0, 1);
-        _Q.setFromAxisAngle(_A, 4.0 * Math.PI * timeInSeconds * this._acceleration.z);
+        _Q.setFromAxisAngle(_A, 0.9 * Math.PI * timeInSeconds * this._acceleration.x);
         _R.multiply(_Q);
       }
       if (this._input._keys.right) {
         _A.set(0, 0, 1);
-        _Q.setFromAxisAngle(_A, 4.0 * -Math.PI * timeInSeconds * this._acceleration.z);
+        _Q.setFromAxisAngle(_A, 0.9 * -Math.PI * timeInSeconds * this._acceleration.x);
         _R.multiply(_Q);
       }
   
@@ -93,12 +105,21 @@ class SpaceshipController { //controls spaceship
       var sideways = new THREE.Vector3(1, 0, 0);
       sideways.applyQuaternion(controlObject.quaternion);
       sideways.normalize();
+
+	  var updown = new THREE.Vector3(0, 0, 1);
+      updown.applyQuaternion(controlObject.quaternion);
+	  
+      updown.normalize();
   
       sideways.multiplyScalar(velocity.x * timeInSeconds);
       forward.multiplyScalar(velocity.y * timeInSeconds);
-  
-      controlObject.position.add(forward);
+	  updown.multiplyScalar(velocity.z * timeInSeconds);
+
+	  controlObject.position.add(forward);
       controlObject.position.add(sideways);
+      controlObject.position.add(updown);
+
+	  
   
       oldPosition.copy(controlObject.position);
 	  this._position.copy(controlObject.position);
@@ -120,6 +141,8 @@ class keyboardListener { // keyboard event listener
 		right: false,
 		space: false,
 		shift: false,
+		up: false,
+		down: false
 		};
 		document.addEventListener('keydown', (e) => this._onKeyDown(e), false);
 		document.addEventListener('keyup', (e) => this._onKeyUp(e), false);
@@ -145,6 +168,12 @@ class keyboardListener { // keyboard event listener
 		case 16: // SHIFT
 			this._keys.shift = true;
 			break;
+		case 81: // q
+			this._keys.up = true;
+			break;
+		case 69: // e
+			this._keys.down = true;
+			break;
 		}
 	}
 
@@ -168,6 +197,12 @@ class keyboardListener { // keyboard event listener
 		case 16: // SHIFT
 			this._keys.shift = false;
 			break;
+		case 81: // q
+			this._keys.up = false;
+			break;
+		case 69: // e
+			this._keys.down = false;
+			break;
 		}
 	}
 };
@@ -182,10 +217,10 @@ class CameraController { //controls camera
 	_CalculateIdealOffset() { // calculate camera position
 	  var idealOffset; 
 
-	  if (firstPerspective==true){ //1?ù∏Ïπ?
-		idealOffset=new THREE.Vector3(0, -2, 3);//(Ï¢åÏö∞,?ïû?í§,?úÑ?ïÑ?ûò)
+	  if (firstPerspective==true){ //first perspective
+		idealOffset=new THREE.Vector3(0, -2, 3);//(left/right,forward/backward,up/down)
 	  }
-	  else {//3?ù∏Ïπ?
+	  else {//third perspective
 		idealOffset=new THREE.Vector3(0, 18, 15);
 	  }
 	  idealOffset.applyQuaternion(this._object.Rotation);
@@ -196,10 +231,10 @@ class CameraController { //controls camera
 	_CalculateIdealLookat() { // calculate camera lookat
 	  var idealLookat; 
 
-	  if (firstPerspective == true){ //1?ù∏Ïπ?
-		idealLookat = new THREE.Vector3(0, -10, 2); //(0,0,0)??? Î¨ºÏ≤¥ Î∞©Ìñ•
+	  if (firstPerspective == true){ //first perspective
+		idealLookat = new THREE.Vector3(0, -10, 2); //(0,0,0) heads to object direction
 	  }
-	  else { //3?ù∏Ïπ?
+	  else { //third perspective
 		idealLookat = new THREE.Vector3(0, -5, 5);
 	  }
 	 
