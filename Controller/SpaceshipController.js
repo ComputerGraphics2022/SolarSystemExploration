@@ -127,4 +127,3 @@ class SpaceshipController { //controls spaceship
 	  //console.log(this.Position)
     }
 };
-

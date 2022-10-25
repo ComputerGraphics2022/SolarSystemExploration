@@ -49,4 +49,3 @@ class CameraController { //controls camera
 	  camera.lookAt(this._currentLookat);
 	}
 };
-  
