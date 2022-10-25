@@ -150,7 +150,7 @@ window.onload = function init()
 	   renderer.render(scene,camera);
 	   requestAnimationFrame(animate);
 	}
-	/* click event */
+	/* click event --> move to clickHandler.js */
 	canvas.addEventListener("click", event => {
 		let pos = new THREE.Vector3();
 		pos.set(
