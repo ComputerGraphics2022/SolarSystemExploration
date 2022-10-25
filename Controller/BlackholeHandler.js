@@ -1,3 +1,3 @@
-class BlackholeHandler {
-    
+function isCollision() {
+    console.log("is collision");
 }

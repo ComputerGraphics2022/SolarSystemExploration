@@ -1,6 +1,9 @@
 var sceneID = null;
 var camera;
+var raycaster = new THREE.Raycaster();
+var mouse = new THREE.Vector2();
 var scene;
+var canvas;
 var firstPerspective=true;
 var thirdPerspective=false;
 var trackballControl=false;
@@ -10,7 +13,7 @@ window.onload = function init()
 	var rotSpeed = 1;
 	var revSpeed = 1;
 	var theta  = 0;
-	const canvas = document.getElementById( "gl-canvas" );
+	canvas = document.getElementById( "gl-canvas" );
 	const renderer = new THREE.WebGLRenderer({canvas});
 
 	scene = new THREE.Scene();
@@ -116,7 +119,8 @@ window.onload = function init()
 			console.error(error);
 		});
 
-	
+	var blackholeloc = 0;
+
 	// for rotating black hole 
 	function animate(time) {
 
@@ -125,24 +129,50 @@ window.onload = function init()
       	const speed = 1 * .3;
       	const rot = time * speed;
       	blackhole.rotation.x = rot;
-		// spaceship의 위치에 따라 blackhole 방향 설정
+		// move blackhole depending on spaceship position
 		if (spaceship.Position.x < 100) {
 			if (spaceship.Position.y < 100) {
-				blackhole.position.set(-200, -200, 0);
+				blackhole.position.set(-300, -300, 0);
+				blackholeloc = 1;
 			}
-			else blackhole.position.set(-200, 200, 0);
+			else blackhole.position.set(-300, 300, 0);
+				blackholeloc = 2;
 		}
 		else {
-			if (spaceship.Position.y < 100) {
-				blackhole.position.set(200, -200, 0);
+			if (spaceship.Position.z < 100) {
+				blackhole.position.set(300, -300, 0);
+				blackholeloc = 3;
 			}
-			else blackhole.position.set(200, 200, 0);
+			else blackhole.position.set(300, 300, 0);
+				blackholeloc = 4;
 		}
 
 	   renderer.render(scene,camera);
 	   requestAnimationFrame(animate);
 	}
+	/* click event */
+	canvas.addEventListener("click", event => {
+		let pos = new THREE.Vector3();
+		pos.set(
+    			(event.clientX / canvas.width) * 2 - 1,
+    			- (event.clientY / canvas.height) * 2 + 1,
+    			0
+		);
+		pos.unproject(camera);
+		console.log(pos); // for check
+		console.log(blackhole.position);
 
+		// accuracy correction required
+		if (Math.abs(pos.x - blackhole.position.x) < 200 &&
+			Math.abs(pos.y == blackhole.position.y) < 200 &&
+			Math.abs(pos.z == blackhole.position.z) < 100) {
+				//hit
+				console.log("clicked");
+				
+			}
+
+		
+	})	
 
 	var spaceship = new SpaceshipController();
 	var previousTime = null;
