@@ -60,7 +60,9 @@ class BlackholeController {
 	}
 
 	onClicked() {
-	location.reload();
+		//
+		const response = confirm('Reload the page?');
+		if (response) location.reload();
 
 }
 }
