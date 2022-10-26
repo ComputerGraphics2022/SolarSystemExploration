@@ -102,54 +102,9 @@ window.onload = function init()
 	var stars = createStars(1000, 64);
 	scene.add(stars);
 
+	/* blackhole */
+	var blackhole = new BlackholeController();
 
-	/* create black hole */
-	// change : create to 4 ways
-	const loader = new THREE.GLTFLoader();
-	
-	loader.load('./images/blackhole/scene.gltf', function(gltf){
-		blackhole = gltf.scene.children[0];
-		blackhole.scale.set(10, 10, 10);
-		
-		blackhole.position.set(400, 0, 0);		
-		scene.add(gltf.scene);
-		animate(blackhole);
-		  
-		}, undefined, function (error) {
-			console.error(error);
-		});
-
-	var blackholeloc = 0;
-
-	// for rotating black hole 
-	function animate(time) {
-
-		time *= 0.001;  // convert time to seconds
-
-      	const speed = 1 * .3;
-      	const rot = time * speed;
-      	blackhole.rotation.x = rot;
-		// move blackhole depending on spaceship position
-		if (spaceship.Position.x < 100) {
-			if (spaceship.Position.y < 100) {
-				blackhole.position.set(-300, -300, 0);
-				blackholeloc = 1;
-			}
-			else blackhole.position.set(-300, 300, 0);
-				blackholeloc = 2;
-		}
-		else {
-			if (spaceship.Position.z < 100) {
-				blackhole.position.set(300, -300, 0);
-				blackholeloc = 3;
-			}
-			else blackhole.position.set(300, 300, 0);
-				blackholeloc = 4;
-		}
-
-	   renderer.render(scene,camera);
-	   requestAnimationFrame(animate);
-	}
 	/* click event --> move to clickHandler.js */
 	canvas.addEventListener("click", event => {
 		let pos = new THREE.Vector3();
@@ -160,14 +115,15 @@ window.onload = function init()
 		);
 		pos.unproject(camera);
 		console.log(pos); // for check
-		console.log(blackhole.position);
+		console.log(blackhole);
 
 		// accuracy correction required
-		if (Math.abs(pos.x - blackhole.position.x) < 200 &&
-			Math.abs(pos.y == blackhole.position.y) < 200 &&
-			Math.abs(pos.z == blackhole.position.z) < 100) {
+		if (Math.abs(pos.x - blackhole.blackhole.position.x) < 200 &&
+			Math.abs(pos.y == blackhole.blackhole.position.y) < 200 &&
+			Math.abs(pos.z == blackhole.blackhole.position.z) < 100) {
 				//hit
-				console.log("clicked");
+				blackhole.onClicked();
+
 				
 			}
 
