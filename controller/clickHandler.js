@@ -1,4 +1,4 @@
-function onHoleClick() {
+function onClicked() {
 
     //in solar explorer.js
 }

@@ -102,8 +102,11 @@ window.onload = function init()
 	var stars = createStars(1000, 64);
 	scene.add(stars);
 
+	var spaceship = new SpaceshipController();
+	var previousTime = null;
+
 	/* blackhole */
-	var blackhole = new BlackholeController();
+	var blackhole = new BlackholeController(spaceship);
 
 	/* click event --> move to clickHandler.js */
 	canvas.addEventListener("click", event => {
@@ -115,11 +118,11 @@ window.onload = function init()
 		);
 		pos.unproject(camera);
 		console.log(pos); // for check
-		console.log(blackhole);
+		console.log(blackhole.position);
 
 		// accuracy correction required
-		if (Math.abs(pos.x - blackhole.blackhole.position.x) < 200 &&
-			Math.abs(pos.y == blackhole.blackhole.position.y) < 200 &&
+		if (Math.abs(pos.x - blackhole.blackhole.position.x) < 150 &&
+			Math.abs(pos.y == blackhole.blackhole.position.y) < 150 &&
 			Math.abs(pos.z == blackhole.blackhole.position.z) < 100) {
 				//hit
 				blackhole.onClicked();
@@ -130,10 +133,7 @@ window.onload = function init()
 		
 	})	
 
-	var spaceship = new SpaceshipController();
-	var previousTime = null;
-
-
+	
 	var cameraControl = new CameraController(spaceship);
 
 	var controls = new THREE.TrackballControls(camera, renderer.domElement);
@@ -178,7 +178,8 @@ window.onload = function init()
 		//spaceship update
 		var timeElapsed = time - previousTime;
 		timeElapsed *= 0.001; //second
-		spaceship.Update(timeElapsed) 
+		spaceship.Update(timeElapsed);
+		blackhole.Update(timeElapsed);
 
 		//camera update
 		if(firstPerspective==true || thirdPerspective==true){
