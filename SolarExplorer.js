@@ -106,7 +106,7 @@ window.onload = function init()
 	var previousTime = null;
 
 	/* blackhole */
-	var blackhole = new BlackholeController(spaceship);
+	var bcontroller = new BlackholeController(spaceship);
 
 	/* click event --> move to clickHandler.js */
 	canvas.addEventListener("click", event => {
@@ -118,14 +118,14 @@ window.onload = function init()
 		);
 		pos.unproject(camera);
 		console.log(pos); // for check
-		console.log(blackhole.position);
+		console.log(bcontroller.blackhole.position);
 
 		// accuracy correction required
-		if (Math.abs(pos.x - blackhole.blackhole.position.x) < 150 &&
-			Math.abs(pos.y == blackhole.blackhole.position.y) < 150 &&
-			Math.abs(pos.z == blackhole.blackhole.position.z) < 100) {
+		if (Math.abs(pos.x - bcontroller.blackhole.position.x) < 150 &&
+			Math.abs(pos.y == bcontroller.blackhole.position.y) < 150 &&
+			Math.abs(pos.z == bcontroller.blackhole.position.z) < 100) {
 				//hit
-				blackhole.onClicked();
+				bcontroller.onClicked();
 
 				
 			}
@@ -179,7 +179,7 @@ window.onload = function init()
 		var timeElapsed = time - previousTime;
 		timeElapsed *= 0.001; //second
 		spaceship.Update(timeElapsed);
-		blackhole.Update(timeElapsed);
+		bcontroller.Update(timeElapsed);
 
 		//camera update
 		if(firstPerspective==true || thirdPerspective==true){
