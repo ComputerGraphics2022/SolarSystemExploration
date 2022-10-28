@@ -1,5 +1,4 @@
-
-class keyboardListener { // keyboard event listener
+export class keyboardListener { // keyboard event listener
 	constructor() {
 		this._Init();    
 	}

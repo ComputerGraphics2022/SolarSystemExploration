@@ -1,5 +1,4 @@
-
-class CameraController { //controls camera
+export class CameraController{ //controls camera
 	constructor(object) {
 	  this._object = object;
 	  this._currentPosition = new THREE.Vector3();

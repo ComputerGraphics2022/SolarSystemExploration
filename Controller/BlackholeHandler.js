@@ -1,4 +1,4 @@
-class BlackholeController {
+export class BlackholeController {
 
 
     constructor(spaceship) {
@@ -36,6 +36,10 @@ class BlackholeController {
 	get Position() { 
 		return this._position;
 	  }
+	
+	print() {
+		console.log(this);
+	}
 
 // for rotating black hole 
  	Update(time) {

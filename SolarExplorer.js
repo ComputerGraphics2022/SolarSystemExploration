@@ -1,15 +1,21 @@
-var sceneID = null;
+import * as Blackhole from './controller/BlackholeHandler.js';
+import * as Camera from './controller/CameraController.js';
+import * as Spaceship from './controller/SpaceshipController.js';
+
+//var sceneID = null;
 var camera;
-var raycaster = new THREE.Raycaster();
-var mouse = new THREE.Vector2();
+//var raycaster = new THREE.Raycaster();
+//var mouse = new THREE.Vector2();
 var scene;
 var canvas;
 var firstPerspective=true;
 var thirdPerspective=false;
-var trackballControl=false;
+//var trackballControl=false;
 
 window.onload = function init() 
 {
+
+	
 	var rotSpeed = 1;
 	var revSpeed = 1;
 	var theta  = 0;
@@ -102,11 +108,11 @@ window.onload = function init()
 	var stars = createStars(1000, 64);
 	scene.add(stars);
 
-	var spaceship = new SpaceshipController();
+	var spaceship = new Spaceship.SpaceshipController();
 	var previousTime = null;
 
 	/* blackhole */
-	var bcontroller = new BlackholeController(spaceship);
+	var bcontroller = new Blackhole.BlackholeController(spaceship);
 
 	/* click event --> move to clickHandler.js */
 	canvas.addEventListener("click", event => {
@@ -134,7 +140,7 @@ window.onload = function init()
 	})	
 
 	
-	var cameraControl = new CameraController(spaceship);
+	var cameraControl = new Camera.CameraController(spaceship);
 
 	var controls = new THREE.TrackballControls(camera, renderer.domElement);
 

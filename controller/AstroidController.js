@@ -9,7 +9,7 @@ import {
   largeAsteroidCharacteristics2,
 } from "../constant/asteroid";
 
-class AsteroidFactory {
+export class AsteroidFactory {
   constructor(scene) {
     this.scene = scene;
   }

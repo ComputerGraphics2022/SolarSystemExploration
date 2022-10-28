@@ -1,15 +1,17 @@
-class SpaceshipController { //controls spaceship 
+import * as Keyboard from './KeyboardListener.js';
+
+export class SpaceshipController { //controls spaceship 
     constructor() {
       this._Init();
     }
   
     _Init() {
       //this._decceleration = new THREE.Vector3(-0.001, -1.0, -0.001);
-	  this._decceleration = new THREE.Vector3(-5, -1.5, -5);
+	    this._decceleration = new THREE.Vector3(-5, -1.5, -5);
       this._acceleration = new THREE.Vector3(0.5, 50.0, 40.0);
       this._velocity = new THREE.Vector3(0, 0, 0);
-	  this._position = new THREE.Vector3();	
-      this._input = new keyboardListener ();
+	    this._position = new THREE.Vector3();	
+      this._input = new Keyboard.keyboardListener ();
   
       this._LoadModels();
     }
