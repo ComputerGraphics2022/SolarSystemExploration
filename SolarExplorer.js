@@ -143,6 +143,7 @@ window.onload = function init()
 
 	// render canvas
 	function render(time) {
+		// resize canvas before rendering objects
 		resizeCanvas();
 
 
@@ -400,6 +401,7 @@ window.onload = function init()
 		);
 	}
 
+	// resize canvas size depending on client browser window size
 	function resizeCanvas(){
 		const clientCanvas = renderer.domElement;
 		const dispWidth = clientCanvas.clientWidth;
