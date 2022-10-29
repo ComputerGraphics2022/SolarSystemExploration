@@ -143,6 +143,8 @@ window.onload = function init()
 
 	// render canvas
 	function render(time) {
+		resizeCanvas();
+
 
 		document.getElementById("rotSpeed").oninput = function(event){
 			rotSpeed = parseFloat(event.target.value);
@@ -396,6 +398,21 @@ window.onload = function init()
 				side: THREE.BackSide
 			})
 		);
+	}
+
+	function resizeCanvas(){
+		const clientCanvas = renderer.domElement;
+		const dispWidth = clientCanvas.clientWidth;
+		const dispHeight = clientCanvas.clientHeight;
+
+		if(clientCanvas.width !== dispWidth || clientCanvas.height !== dispHeight){
+			renderer.setSize(dispWidth, dispHeight, false);
+			camera.aspect = dispWidth / dispHeight;
+			camera.updateProjectionMatrix();
+		}
+
+		canvas.width = dispWidth;
+		canvas.height = dispHeight;
 	}
 }
 
