@@ -109,9 +109,9 @@ window.onload = function init()
 	var asteroid = new AsteroidHandler();
 	 
 	/* blackhole */
-	var bcontroller = new BlackholeController(spaceship);
+	var blackhole = new BlackholeController(spaceship);
 
-	/* click event --> move to clickHandler.js */
+	/* click event --> move
 	canvas.addEventListener("click", event => {
 		let pos = new THREE.Vector3();
 		pos.set(
@@ -121,21 +121,22 @@ window.onload = function init()
 		);
 		pos.unproject(camera);
 		console.log(pos); // for check
-		//console.log(bcontroller.blackhole.position);
+		//console.log(blackhole.blackhole.position);
 
 		// accuracy correction required
-		if (Math.abs(pos.x - bcontroller.blackhole.position.x) < 150 &&
-			Math.abs(pos.y == bcontroller.blackhole.position.y) < 150 &&
-			Math.abs(pos.z == bcontroller.blackhole.position.z) < 100) {
+		if (Math.abs(pos.x - blackhole.model.position.x) < 150 &&
+			Math.abs(pos.y == blackhole.model.position.y) < 150 &&
+			Math.abs(pos.z == blackhole.model.position.z) < 100) {
 				//hit
 				//need to add raycaster condition 
-				bcontroller.onClicked();
+				blackhole.onClicked();
 
 				
 			}
-
 		
-	})	
+	})		
+	*/
+	
 
 	
 	var cameraControl = new CameraController(spaceship);
@@ -185,7 +186,7 @@ window.onload = function init()
 		var timeElapsed = time - previousTime;
 		timeElapsed *= 0.001; //second
 		spaceship.Update(timeElapsed);
-		bcontroller.Update(timeElapsed);
+		blackhole.Update(timeElapsed);
 
 		//camera update
 		if(firstPerspective==true || thirdPerspective==true){
@@ -223,6 +224,13 @@ window.onload = function init()
 		saturnRing.rotation.z += 0.0005 * rotSpeed * 5;
 		uranus.rotation.y += 0.0005 * rotSpeed * 4;
 		neptune.rotation.y += 0.0005 * rotSpeed * 4;
+		
+
+		// rotate blackhole in position
+		if (blackhole.model != null) {
+			blackhole.model.rotation.x += 0.0005 * rotSpeed * 5;
+		}
+		
 
 		// revolve planets
 		// mercury    	8.6

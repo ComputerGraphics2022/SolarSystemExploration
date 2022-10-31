@@ -4,6 +4,7 @@ class BlackholeController {
     constructor(spaceship) {
         this._Init();
 		this._position = new THREE.Vector3();	
+		this.distance = new THREE.Vector3();	
 		this.spaceship = spaceship;
     }
 
@@ -21,8 +22,8 @@ class BlackholeController {
 		loader.load('./gltf/blackhole/scene.gltf', (gltf) => {
 			gltf = gltf.scene.children[0];
 			gltf.scale.set(10, 10, 10);
-			gltf.position.set(400, 0, 0);
-			this.blackhole = gltf;
+			gltf.position.set(300, 150, 0);
+			this.model = gltf;
 			scene.add(gltf);
 			//animate();
 		  
@@ -39,27 +40,34 @@ class BlackholeController {
 
 // for rotating black hole 
  	Update(time) {
-	if (!this.blackhole) {
+	if (!this.model) {
 			return;
 	}
-
+	
 	time *= 0.001;  // convert time to seconds
     const speed = 1 * .3;
     const rot = time * speed;
-    this.blackhole.rotation.x = rot;
+    this.model.rotation.z = rot;
 	// move blackhole depending on spaceship position
 	if (this.spaceship.Position.x < 100) {
 		if (this.spaceship.Position.y < 100) {
-			this.blackhole.position.set(-300, -300, 0);
+			this.model.position.set(-300, -150, 0);
 		}
-		else this.blackhole.position.set(-300, 300, 0);
+		else this.model.position.set(-300, 150, 0);
 	}
 	else {
 		if (this.spaceship.Position.z < 100) {
-			this.blackhole.position.set(300, -300, 0);
+			this.model.position.set(300, -150, 0);
 		}
-		else this.blackhole.position.set(300, 300, 0);
+		else this.model.position.set(300, 150, 0);
 	}
+
+	var shipPos = new THREE.Vector3().set(this.spaceship.Position.x, this.spaceship.Position.y, this.spaceship.Position.z);
+	if (this.model && (shipPos.distanceTo(this.model.position)< 40)) {
+
+		this.onClicked();
+	}
+
    	//renderer.render(scene,camera);
    	//requestAnimationFrame(animate);
 	
@@ -69,6 +77,7 @@ class BlackholeController {
 		//
 		const response = confirm('Reload the page?');
 		if (response) location.reload();
+		//else this.model.position *= 0.8;
 
 }
 }
