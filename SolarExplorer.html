@@ -11,6 +11,7 @@
 <script type="text/javascript" src="controller/CameraController.js"></script>
 <script type="text/javascript" src="controller/SpaceshipController.js"></script>
 <script type="text/javascript" src="controller/KeyboardListener.js"></script>
+<script type="text/javascript" src="controller/objectInfoHandler.js"></script>
 <body>
 
 <canvas id="gl-canvas" width="1920" height="1080">
@@ -26,7 +27,92 @@ Oops ... your browser doesn't support the HTML5 canvas element
     <button id="firstPerspective">1</button>
     <button id="thirdPerspective">3</button>
     <button id="trackballControl">TrackballControl</button>
-    
+</div>
+
+<div id="guideBox">
+    How to play<br/><br/>
+    W, A, S, D : Forward, Left, Backward, Right<br/>
+    Q, E : Up, Down<br/>
+    LShift, LCtrl : Speed up, Speed down<br/><br/>
+    <button id="guideBoxOk">Close</button>
+</div>
+<script>
+    document.getElementById("guideBoxOk").onclick = function(){
+        document.getElementById("guideBox").style.display = "none";
+    };
+</script>
+
+<div id="sunInfo">
+    Sun<br/><br/>
+    Center star of the Solar system<br/>
+    Equatorial radius : 695,500 km<br/>
+    Rotation speed : 1.9 km/s<br/>
+    Rotation period : 25.3 day(s)
+</div>
+<div id="mercuryInfo">
+    Mercury<br/><br/>
+    Equatorial radius : 2439.7 km<br/>
+    Rotation speed : 0.003 km/s<br/>
+    Rotation period : 58.6 day(s)<br/>
+    Revolution speed : 47.8 km/s<br/>
+    Revolution period : 87.9 day(s)
+</div>
+<div id="venusInfo">
+    Venus<br/><br/>
+    Equatorial radius : 6051.8 km<br/>
+    Rotation speed : 0.0018 km/s<br/>
+    Rotation period : 243 day(s)<br/>
+    Revolution speed : 35 km/s<br/>
+    Revolution period : 224 day(s)
+</div>
+<div id="earthInfo">
+    Earth<br/><br/>
+    Home planet for only known lifeforms<br/>
+    Equatorial radius : 6378.1 km<br/>
+    Rotation speed : 0.4651 km/s<br/>
+    Rotation period : 1 day(s)<br/>
+    Revolution speed : 29.7 km/s<br/>
+    Revolution period : 365 day(s)
+</div>
+<div id="marsInfo">
+    Mars<br/><br/>
+    Equatorial radius : 3396.2 km<br/>
+    Rotation speed : 0.2411 km/s<br/>
+    Rotation period : 1 day(s)<br/>
+    Revolution speed : 24.1 km/s<br/>
+    Revolution period : 687 day(s)
+</div>
+<div id="jupiterInfo">
+    Jupiter<br/><br/>
+    Equatorial radius : 71,492 km<br/>
+    Rotation speed : 12.6 km/s<br/>
+    Rotation period : 0.4 day(s)<br/>
+    Revolution speed : 13 km/s<br/>
+    Revolution period : 4333 day(s)
+</div>
+<div id="saturnInfo">
+    Saturn<br/><br/>
+    Equatorial radius : 60,268 km<br/>
+    Rotation speed : 9.8 km/s<br/>
+    Rotation period : 0.4 day(s)<br/>
+    Revolution speed : 9.6 km/s<br/>
+    Revolution period : 10,756 day(s)
+</div>
+<div id="uranusInfo">
+    Uranus<br/><br/>
+    Equatorial radius : 25,559 km<br/>
+    Rotation speed : 2.5 km/s<br/>
+    Rotation period : 0.7 day(s)<br/>
+    Revolution speed : 6.8 km/s<br/>
+    Revolution period : 30,707 day(s)
+</div>
+<div id="neptuneInfo">
+    Neptune<br/><br/>
+    Equatorial radius : 24,764 km<br/>
+    Rotation speed : 2.6 km/s<br/>
+    Rotation period : 0.6 day(s)<br/>
+    Revolution speed : 5.4 km/s<br/>
+    Revolution period : 60,223 day(s)
 </div>
 
 </body>

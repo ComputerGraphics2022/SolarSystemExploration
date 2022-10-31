@@ -16,3 +16,32 @@
     height: 100%;
     width: 100%;
 }
+
+#guideBox {
+    background-color: white;
+    width: 400;
+    height: 140;
+    top: 30%;
+    left: 35%;
+    position: absolute;
+    opacity: 0.6;
+    text-align: center;
+    padding: 50px;
+    border-radius: 30px;
+    color: black;
+    font-size: 18;
+    display: block;
+    font-weight: bold;
+}
+
+#sunInfo, #mercuryInfo, #venusInfo, #earthInfo, #marsInfo, #jupiterInfo, #saturnInfo, #uranusInfo, #neptuneInfo {
+    top: 65%;
+    left: 40%;
+    position: absolute;
+    opacity: 0.6;
+    font-size: 15;
+    color: white;
+    text-align: center;
+    padding: 50px;
+    display: none;
+}
