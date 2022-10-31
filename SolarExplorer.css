@@ -35,13 +35,12 @@
 }
 
 #sunInfo, #mercuryInfo, #venusInfo, #earthInfo, #marsInfo, #jupiterInfo, #saturnInfo, #uranusInfo, #neptuneInfo {
-    top: 65%;
+    top: 75%;
     left: 40%;
     position: absolute;
     opacity: 0.6;
     font-size: 15;
     color: white;
     text-align: center;
-    padding: 50px;
     display: none;
 }
