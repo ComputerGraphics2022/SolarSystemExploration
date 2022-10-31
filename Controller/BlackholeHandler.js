@@ -18,7 +18,7 @@ class BlackholeController {
     _LoadModels() {
         const loader = new THREE.GLTFLoader();
 	
-		loader.load('./images/blackhole/scene.gltf', (gltf) => {
+		loader.load('./gltf/blackhole/scene.gltf', (gltf) => {
 			gltf = gltf.scene.children[0];
 			gltf.scale.set(10, 10, 10);
 			gltf.position.set(400, 0, 0);

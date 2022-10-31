@@ -105,6 +105,9 @@ window.onload = function init()
 	var spaceship = new SpaceshipController();
 	var previousTime = null;
 
+	/* random asteroid */
+	var asteroid = new AsteroidHandler();
+	 
 	/* blackhole */
 	var bcontroller = new BlackholeController(spaceship);
 
@@ -125,6 +128,7 @@ window.onload = function init()
 			Math.abs(pos.y == bcontroller.blackhole.position.y) < 150 &&
 			Math.abs(pos.z == bcontroller.blackhole.position.z) < 100) {
 				//hit
+				//need to add raycaster condition 
 				bcontroller.onClicked();
 
 				

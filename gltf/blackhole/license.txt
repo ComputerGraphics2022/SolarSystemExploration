@@ -1,0 +1,11 @@
+Model Information:
+* title:	A Black Hole
+* source:	https://sketchfab.com/3d-models/a-black-hole-04097784114e43f3a35dcf76d104592c
+* author:	Kenny Maguire Studio (https://sketchfab.com/Kenny.Maguire)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "A Black Hole" (https://sketchfab.com/3d-models/a-black-hole-04097784114e43f3a35dcf76d104592c) by Kenny Maguire Studio (https://sketchfab.com/Kenny.Maguire) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
