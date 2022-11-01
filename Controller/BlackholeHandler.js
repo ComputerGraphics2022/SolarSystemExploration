@@ -65,7 +65,7 @@ class BlackholeController {
 	var shipPos = new THREE.Vector3().set(this.spaceship.Position.x, this.spaceship.Position.y, this.spaceship.Position.z);
 	if (this.model && (shipPos.distanceTo(this.model.position)< 40)) {
 
-		this.onClicked();
+		this.onCrashed();
 	}
 
    	//renderer.render(scene,camera);
@@ -73,7 +73,7 @@ class BlackholeController {
 	
 	}
 
-	onClicked() {
+	onCrashed() {
 		//
 		const response = confirm('Reload the page?');
 		if (response) location.reload();

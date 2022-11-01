@@ -106,8 +106,8 @@ window.onload = function init()
 	var previousTime = null;
 
 	/* random asteroid */
-	var asteroid = new AsteroidHandler();
-	 
+	var asteroid = new AsteroidHandler(spaceship);
+	
 	/* blackhole */
 	var blackhole = new BlackholeController(spaceship);
 
@@ -187,6 +187,7 @@ window.onload = function init()
 		timeElapsed *= 0.001; //second
 		spaceship.Update(timeElapsed);
 		blackhole.Update(timeElapsed);
+		asteroid.Update(timeElapsed);
 
 		//camera update
 		if(firstPerspective==true || thirdPerspective==true){
@@ -266,7 +267,13 @@ window.onload = function init()
     	uranus.position.x = 260 * Math.cos(theta * 1.3 * revSpeed);
 		neptune.position.z = 320 * Math.sin(theta * 1 * revSpeed);
     	neptune.position.x = 320 * Math.cos(theta * 1 * revSpeed);
-
+		
+		if (asteroid.model != null) {
+			asteroid.model.rotation.y += 0.0005 * rotSpeed * 7;
+			asteroid.model.position.z = 120 * Math.sin(theta * 3.5 * revSpeed);
+			asteroid.model.position.x = 120 * Math.cos(theta * 3.5 * revSpeed);
+			
+		}
 		
 		// check location of spaceship and objects, display information when collision
 		var shipPos = new THREE.Vector3().set(spaceship.Position.x, spaceship.Position.y, spaceship.Position.z);
