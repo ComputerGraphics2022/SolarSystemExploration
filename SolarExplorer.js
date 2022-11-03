@@ -298,17 +298,25 @@ window.onload = function init()
 		// check location of spaceship and objects, display information when collision
 		var shipPos = new THREE.Vector3().set(spaceship.Position.x, spaceship.Position.y, spaceship.Position.z);
 		
-		shipPos.distanceTo(new THREE.Vector3().set(sun.position.x, sun.position.y, sun.position.z)) <= 50 ? document.getElementById("sunInfo").style.display = "block" : document.getElementById("sunInfo").style.display = "none";
-		shipPos.distanceTo(new THREE.Vector3().set(mercury.position.x, mercury.position.y, mercury.position.z)) <= 6 ? document.getElementById("mercuryInfo").style.display = "block" : document.getElementById("mercuryInfo").style.display = "none";
-		shipPos.distanceTo(new THREE.Vector3().set(venus.position.x, venus.position.y, venus.position.z)) <= 8 ? document.getElementById("venusInfo").style.display = "block" : document.getElementById("venusInfo").style.display = "none";
-		shipPos.distanceTo(new THREE.Vector3().set(earth.position.x, earth.position.y, earth.position.z)) <= 10 ? document.getElementById("earthInfo").style.display = "block" : document.getElementById("earthInfo").style.display = "none";
-		shipPos.distanceTo(new THREE.Vector3().set(mars.position.x, mars.position.y, mars.position.z)) <= 11 ? document.getElementById("marsInfo").style.display = "block" : document.getElementById("marsInfo").style.display = "none";
-		shipPos.distanceTo(new THREE.Vector3().set(jupiter.position.x, jupiter.position.y, jupiter.position.z)) <= 20 ? document.getElementById("jupiterInfo").style.display = "block" : document.getElementById("jupiterInfo").style.display = "none";
-		shipPos.distanceTo(new THREE.Vector3().set(saturn.position.x, saturn.position.y, saturn.position.z)) <= 19 ? document.getElementById("saturnInfo").style.display = "block" : document.getElementById("saturnInfo").style.display = "none";
-		shipPos.distanceTo(new THREE.Vector3().set(uranus.position.x, uranus.position.y, uranus.position.z)) <= 17 ? document.getElementById("uranusInfo").style.display = "block" : document.getElementById("uranusInfo").style.display = "none";
-		shipPos.distanceTo(new THREE.Vector3().set(neptune.position.x, neptune.position.y, neptune.position.z)) <= 17 ? document.getElementById("neptuneInfo").style.display = "block" : document.getElementById("neptuneInfo").style.display = "none";
+		shipPos.distanceTo(new THREE.Vector3().set(sun.position.x, sun.position.y, sun.position.z)) <= 50 ?
+		document.getElementById("sunInfo").style.display = "block" : document.getElementById("sunInfo").style.display = "none";
+		shipPos.distanceTo(new THREE.Vector3().set(mercury.position.x, mercury.position.y, mercury.position.z)) <= 6 ?
+		document.getElementById("mercuryInfo").style.display = "block" : document.getElementById("mercuryInfo").style.display = "none";
+		shipPos.distanceTo(new THREE.Vector3().set(venus.position.x, venus.position.y, venus.position.z)) <= 8 ?
+		document.getElementById("venusInfo").style.display = "block" : document.getElementById("venusInfo").style.display = "none";
+		shipPos.distanceTo(new THREE.Vector3().set(earth.position.x, earth.position.y, earth.position.z)) <= 10 ?
+		document.getElementById("earthInfo").style.display = "block" : document.getElementById("earthInfo").style.display = "none";
+		shipPos.distanceTo(new THREE.Vector3().set(mars.position.x, mars.position.y, mars.position.z)) <= 11 ? 
+		document.getElementById("marsInfo").style.display = "block" : document.getElementById("marsInfo").style.display = "none";
+		shipPos.distanceTo(new THREE.Vector3().set(jupiter.position.x, jupiter.position.y, jupiter.position.z)) <= 20 ? 
+		document.getElementById("jupiterInfo").style.display = "block" : document.getElementById("jupiterInfo").style.display = "none";
+		shipPos.distanceTo(new THREE.Vector3().set(saturn.position.x, saturn.position.y, saturn.position.z)) <= 19 ? 
+		document.getElementById("saturnInfo").style.display = "block" : document.getElementById("saturnInfo").style.display = "none";
+		shipPos.distanceTo(new THREE.Vector3().set(uranus.position.x, uranus.position.y, uranus.position.z)) <= 17 ? 
+		document.getElementById("uranusInfo").style.display = "block" : document.getElementById("uranusInfo").style.display = "none";
+		shipPos.distanceTo(new THREE.Vector3().set(neptune.position.x, neptune.position.y, neptune.position.z)) <= 17 ? 
+		document.getElementById("neptuneInfo").style.display = "block" : document.getElementById("neptuneInfo").style.display = "none";
 		
-
 
 		//console.log(sun.rotation.y);
 		sceneID = requestAnimationFrame(render);
