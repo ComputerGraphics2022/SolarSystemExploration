@@ -276,7 +276,11 @@ window.onload = function init()
 		neptune.position.z = 320 * Math.sin(theta * 1 * revSpeed);
     	neptune.position.x = 320 * Math.cos(theta * 1 * revSpeed);
 		
-		if (asteroid4.model != null) {
+		if (asteroid1.model != null 
+			&& asteroid2.model!= null
+			&& asteroid3.model != null
+			&& asteroid4.model != null
+			) {
 			asteroid1.model.rotation.y += 0.0005 * rotSpeed * 7;
 			asteroid1.model.position.z = 120 * Math.sin(theta * 3.5 * revSpeed);
 			asteroid1.model.position.x = 120 * Math.cos(theta * 3.5 * revSpeed);
