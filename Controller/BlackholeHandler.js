@@ -1,6 +1,5 @@
 class BlackholeController {
 
-
     constructor(spaceship) {
         this._Init();
 		this._position = new THREE.Vector3();	

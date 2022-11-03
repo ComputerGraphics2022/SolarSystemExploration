@@ -105,9 +105,13 @@ window.onload = function init()
 	var spaceship = new SpaceshipController();
 	var previousTime = null;
 
-	/* random asteroid */
-	var asteroid = new AsteroidHandler(spaceship);
-	
+	/* random 4 asteroids */
+	var asteroid = new AsteroidHandler(spaceship, 1);
+	var asteroid1 = new AsteroidHandler(spaceship, 1);
+	var asteroid2 = new AsteroidHandler(spaceship, 1);
+	var asteroid3 = new AsteroidHandler(spaceship, -1);
+	var asteroid4 = new AsteroidHandler(spaceship, -1);
+
 	/* blackhole */
 	var blackhole = new BlackholeController(spaceship);
 
@@ -187,7 +191,11 @@ window.onload = function init()
 		timeElapsed *= 0.001; //second
 		spaceship.Update(timeElapsed);
 		blackhole.Update(timeElapsed);
-		asteroid.Update(timeElapsed);
+		
+		asteroid1.Update(timeElapsed);
+		asteroid2.Update(timeElapsed);
+		asteroid3.Update(timeElapsed);
+		asteroid4.Update(timeElapsed);
 
 		//camera update
 		if(firstPerspective==true || thirdPerspective==true){
@@ -268,14 +276,23 @@ window.onload = function init()
 		neptune.position.z = 320 * Math.sin(theta * 1 * revSpeed);
     	neptune.position.x = 320 * Math.cos(theta * 1 * revSpeed);
 		
-		/* 
-		*/
-		
-		if (asteroid.model != null) {
-			asteroid.model.rotation.y += 0.0005 * rotSpeed * 7;
-			asteroid.model.position.z = 120 * Math.sin(theta * 3.5 * revSpeed);
-			asteroid.model.position.x = 120 * Math.cos(theta * 3.5 * revSpeed);
-			
+		if (asteroid4.model != null) {
+			asteroid1.model.rotation.y += 0.0005 * rotSpeed * 7;
+			asteroid1.model.position.z = 120 * Math.sin(theta * 3.5 * revSpeed);
+			asteroid1.model.position.x = 120 * Math.cos(theta * 3.5 * revSpeed);
+
+			asteroid2.model.rotation.y += 0.0005 * rotSpeed * 7;
+			asteroid2.model.position.z = 120 * Math.sin(theta * 3.5 * revSpeed);
+			asteroid2.model.position.x = 120 * Math.cos(theta * 3.5 * revSpeed);
+
+			asteroid3.model.rotation.y += 0.0005 * rotSpeed * 7;
+			asteroid3.model.position.z = 120 * Math.sin(theta * 3.5 * revSpeed);
+			asteroid3.model.position.x = 120 * Math.cos(theta * 3.5 * revSpeed);
+
+			asteroid4.model.rotation.y += 0.0005 * rotSpeed * 7;
+			asteroid4.model.position.z = 120 * Math.sin(theta * 3.5 * revSpeed);
+			asteroid4.model.position.x = 120 * Math.cos(theta * 3.5 * revSpeed);
+
 		}
 		
 		// check location of spaceship and objects, display information when collision
