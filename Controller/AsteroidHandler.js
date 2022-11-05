@@ -34,7 +34,7 @@ class AsteroidHandler {
 			//gltf = gltf.scene.children[0];
 			gltf = gltf.scene.children[0];	
 			gltf.scale.set(scale, scale, scale);
-			gltf.position.set(loc[0], loc[1], loc[2]);
+			gltf.position.set(loc[0], loc[1] + 50, loc[2]);
 			//group.add(gltf);
 			this.model = gltf;
 			scene.add(gltf);

@@ -50,15 +50,15 @@ class BlackholeController {
 	// move blackhole depending on spaceship position
 	if (this.spaceship.Position.x < 100) {
 		if (this.spaceship.Position.y < 100) {
-			this.model.position.set(-300, -150, 0);
+			this.model.position.set(-300, -50, 0);
 		}
-		else this.model.position.set(-300, 150, 0);
+		else this.model.position.set(-300, 50, 0);
 	}
 	else {
 		if (this.spaceship.Position.z < 100) {
-			this.model.position.set(300, -150, 0);
+			this.model.position.set(300, -50, 0);
 		}
-		else this.model.position.set(300, 150, 0);
+		else this.model.position.set(300, 50, 0);
 	}
 
 	var shipPos = new THREE.Vector3().set(this.spaceship.Position.x, this.spaceship.Position.y, this.spaceship.Position.z);
