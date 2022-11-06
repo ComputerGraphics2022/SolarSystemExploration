@@ -65,6 +65,7 @@ class BlackholeController {
 	if (this.model && (shipPos.distanceTo(this.model.position)< 40)) {
 
 		this.onCrashed();
+		return;
 	}
 
    	//renderer.render(scene,camera);
